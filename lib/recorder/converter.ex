@@ -32,6 +32,7 @@ defmodule Recorder.ResponseConverter do
     payload
     |> Map.put(:headers, payload.headers |> headers_to_json())
     |> Map.put(:body, payload.body |> Poison.decode!())
+    |> Map.delete(:__struct__)
   end
 
   def from_json(json) do
@@ -42,6 +43,7 @@ defmodule Recorder.ResponseConverter do
     asmap
     |> Map.put(:headers, asmap.headers |> headers_from_json())
     |> Map.put(:body, asmap.body |> Poison.encode!())
+    |> Map.put(:__struct__, HTTPoison.Response)
   end
 
   def headers_to_json(headers) when is_list(headers) do
