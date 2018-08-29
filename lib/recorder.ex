@@ -30,9 +30,25 @@ defmodule Recorder do
     quote do
       f = unquote(file)
       current_file = Recorder.getfile()
+      Recorder.State.start_link(f)
       Recorder.setfile(f)
       res = unquote(block)
       Recorder.setfile(current_file)
+
+      IO.inspect Recorder.State.state(f)
+      ## needs persisting...
+      Recorder.State.stop(f)
+      res
+    end
+  end
+
+
+  defmacro with_client(client, do: block) do
+    quote do
+      current_client = Recorder.getclient()
+      Recorder.setclient(unquote(client))
+      res = unquote(block)
+      Recorder.setclient(current_client)
       res
     end
   end
@@ -44,6 +60,14 @@ defmodule Recorder do
   def getfile() do
     Application.get_env(Recorder, :current_file)
   end
+
+  def setclient(client) do
+    Application.put_env(Recorder, :http_client, client)
+  end
+
+  def getclient() do
+    Application.get_env(Recorder, :http_client)
+  end
 end
 
 defmodule RecTest do
@@ -51,11 +75,17 @@ defmodule RecTest do
     require Recorder
     IO.puts("IN file #{Recorder.getfile()}")
 
-    Recorder.store_in "fixtures/file.json" do
-      IO.puts("working")
-      IO.puts("IN file #{Recorder.getfile()}")
-      1 + 4
+    Recorder.with_client(Recorder.HTTPoisonProxy) do
+      Recorder.store_in "fixtures/file.json" do
+        IO.puts("working")
+        IO.puts("IN file #{Recorder.getfile()}")
+        # 1 + 4
+
+        SomeHTTPClient.request("get", "http://mockbin.org/bin/63c5463f-c968-4afb-88e2-c62c75f1cf53/view", "", [{"Accept", "application/json"}])
+      end
     end
+
+
 
     IO.puts("IN file #{Recorder.getfile()}")
   end
@@ -63,13 +93,23 @@ end
 
 defmodule Recorder.HTTPoisonProxy do
   def request(method, url, body, headers) do
-    HTTPoison.request(method, url, body, headers)
+    req = Recorder.RequestConverter.to_json(method, url, body, headers)
+    {:ok, raw_res} = HTTPoison.request(method, url, body, headers)
+    res = Recorder.ResponseConverter.to_json(raw_res)
+    interaction = %{
+      request: req,
+      response: res
+    }
+    Recorder.State.push(Recorder.getfile(), interaction)
+    # respond with raw result
+    raw_res
   end
 end
 
 defmodule SomeHTTPClient do
   def realclient do
-    Application.get_env(Recorder, :http_client, HTTPoison)
+    # Application.get_env(Recorder, :http_client, )
+    Recorder.getclient() || HTTPoison
   end
 
   def request(method, url, body, headers) do
