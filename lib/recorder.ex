@@ -19,11 +19,9 @@ defmodule Recorder do
     assert SomeHTTPClient.make_request2(args) == %{body: "", headers: [], status_code: 200, url: ""}
   end
 
-
   ## configuration:
   Recorder, :http_client
   Recorder, :current_file
-
   """
 
   defmacro store_in(file, do: block) do
@@ -34,13 +32,11 @@ defmodule Recorder do
       Recorder.setfile(f)
       res = unquote(block)
       Recorder.setfile(current_file)
-      IO.inspect Recorder.State.state(f)
       Recorder.Store.persist(Recorder.State.state(f))
       Recorder.State.stop(f)
       res
     end
   end
-
 
   defmacro with_client(client, do: block) do
     quote do
