@@ -36,7 +36,6 @@ defmodule Recorder do
       Recorder.setfile(current_file)
       IO.inspect Recorder.State.state(f)
       Recorder.Store.persist(Recorder.State.state(f))
-      ## needs persisting...
       Recorder.State.stop(f)
       res
     end
@@ -73,16 +72,12 @@ end
 defmodule RecTest do
   def run do
     require Recorder
-    # IO.puts("IN file #{Recorder.getfile()}")
-
     Recorder.with_client(Recorder.HTTPoisonProxy) do
       Recorder.store_in "fixtures/file.json" do
         SomeHTTPClient.request("get", "https://jsonplaceholder.typicode.com/comments?postId=1", "", [{"Accept", "application/json"}])
         SomeHTTPClient.request("get", "https://jsonplaceholder.typicode.com/posts", "", [{"Accept", "application/json"}])
       end
     end
-
-    # IO.puts("IN file #{Recorder.getfile()}")
   end
 end
 
@@ -103,12 +98,10 @@ end
 
 defmodule SomeHTTPClient do
   def realclient do
-    # Application.get_env(Recorder, :http_client, )
     Recorder.getclient() || HTTPoison
   end
 
   def request(method, url, body, headers) do
-    # HTTPoison.request!(method, url, body, headers)
     realclient().request(method, url, body, headers)
   end
 end
