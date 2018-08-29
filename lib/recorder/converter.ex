@@ -27,7 +27,7 @@ defmodule Recorder.RequestConverter do
   end
 end
 
-defmodule Http.ResponseConverter do
+defmodule Recorder.ResponseConverter do
   def to_json(payload = %HTTPoison.Response{}) do
     payload
     |> Map.put(:headers, payload.headers |> headers_to_json())
