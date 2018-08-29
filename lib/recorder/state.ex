@@ -1,10 +1,12 @@
 defmodule Recorder.State do
+
+  defstruct name: nil, interactions: []
   require Logger
   use GenServer
 
   # Client
   def start_link(file) do
-    GenServer.start_link(__MODULE__, [], name: name(file))
+    GenServer.start_link(__MODULE__, %Recorder.State{name: file}, name: name(file))
   end
 
   def stop(file) do
@@ -29,30 +31,29 @@ defmodule Recorder.State do
 
   # Server (callbacks)
   @impl true
-  def init(stack) do
+  def init(state) do
     Process.flag(:trap_exit, true)
-    {:ok, stack}
+    {:ok, state}
   end
 
   @impl true
-  def handle_call(:pop, _from, [head | tail]) do
-    {:reply, head, tail}
+  def handle_call(:pop, _from, state = %Recorder.State{interactions: [head | tail]}) do
+    {:reply, head, state |> Map.put(:interactions, tail)}
   end
 
   @impl true
   def handle_call(:state, _, state) do
-    # we reverse the order to represent the actual timeline
-    {:reply, state |> Enum.reverse(), state}
+    {:reply, state, state}
   end
 
   @impl true
   def handle_cast({:push, item}, state) do
-    {:noreply, [item | state]}
+    {:noreply, Map.put(state, :interactions, [item | state.interactions]) }
   end
 
   @impl true
   def handle_cast(:reset, _state) do
-    {:noreply, []}
+    {:noreply, %Recorder.State{}}
   end
 
   def name(file) when is_binary(file) do
