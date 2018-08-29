@@ -77,15 +77,12 @@ defmodule RecTest do
 
     Recorder.with_client(Recorder.HTTPoisonProxy) do
       Recorder.store_in "fixtures/file.json" do
-        IO.puts("working")
-        IO.puts("IN file #{Recorder.getfile()}")
-        # 1 + 4
+        # IO.puts("IN file #{Recorder.getfile()}")
 
-        SomeHTTPClient.request("get", "http://mockbin.org/bin/63c5463f-c968-4afb-88e2-c62c75f1cf53/view", "", [{"Accept", "application/json"}])
+        SomeHTTPClient.request("get", "https://jsonplaceholder.typicode.com/comments?postId=1", "", [{"Accept", "application/json"}])
+        SomeHTTPClient.request("get", "https://jsonplaceholder.typicode.com/posts", "", [{"Accept", "application/json"}])
       end
     end
-
-
 
     IO.puts("IN file #{Recorder.getfile()}")
   end

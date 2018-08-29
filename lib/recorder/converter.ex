@@ -31,6 +31,7 @@ defmodule Recorder.ResponseConverter do
   def to_json(payload = %HTTPoison.Response{}) do
     payload
     |> Map.put(:headers, payload.headers |> headers_to_json())
+    |> Map.put(:body, payload.body |> Poison.decode!())
   end
 
   def from_json(json) do
