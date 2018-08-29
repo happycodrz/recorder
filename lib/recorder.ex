@@ -49,15 +49,15 @@ end
 defmodule RecTest do
   def run do
     require Recorder
-    IO.puts("IN file #{Application.get_env(Recorder, :current_file)}")
+    IO.puts("IN file #{Recorder.getfile()}")
 
     Recorder.store_in "fixtures/file.json" do
       IO.puts("working")
-      IO.puts("IN file #{Application.get_env(Recorder, :current_file)}")
+      IO.puts("IN file #{Recorder.getfile()}")
       1 + 4
     end
 
-    IO.puts("IN file #{Application.get_env(Recorder, :current_file)}")
+    IO.puts("IN file #{Recorder.getfile()}")
   end
 end
 
