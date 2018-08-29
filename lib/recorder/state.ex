@@ -1,5 +1,4 @@
 defmodule Recorder.State do
-
   defstruct name: nil, interactions: []
   require Logger
   use GenServer
@@ -48,7 +47,7 @@ defmodule Recorder.State do
 
   @impl true
   def handle_cast({:push, item}, state) do
-    {:noreply, Map.put(state, :interactions, [item | state.interactions]) }
+    {:noreply, Map.put(state, :interactions, [item | state.interactions])}
   end
 
   @impl true
