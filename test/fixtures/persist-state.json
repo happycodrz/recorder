@@ -1,0 +1,57 @@
+{
+  "name": "test/fixtures/persist-state.json",
+  "interactions": [
+    {
+      "response": {
+        "status_code": 200,
+        "request_url": "https://jsonplaceholder.typicode.com/comments?postId=1",
+        "headers": [
+          [
+            "Date",
+            "Wed, 29 Aug 2018 20:04:36 GMT"
+          ],
+          [
+            "Content-Type",
+            "application/json; charset=utf-8"
+          ],
+          [
+            "Transfer-Encoding",
+            "chunked"
+          ],
+          [
+            "Connection",
+            "keep-alive"
+          ],
+          [
+            "Server",
+            "cloudflare"
+          ],
+          [
+            "CF-RAY",
+            "4521a0b08e2c9bf3-AMS"
+          ]
+        ],
+        "body": [
+          {
+            "postId": 1,
+            "name": "id labore ex et quam laborum",
+            "id": 1,
+            "email": "Eliseo@gardner.biz",
+            "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
+          }
+        ]
+      },
+      "request": {
+        "url": "https://jsonplaceholder.typicode.com/comments?postId=1",
+        "method": "get",
+        "headers": [
+          [
+            "Accept",
+            "application/json"
+          ]
+        ],
+        "body": ""
+      }
+    }
+  ]
+}
