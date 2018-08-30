@@ -4,6 +4,7 @@ defmodule Playground do
   """
   def run do
     require Recorder
+    Registry.start_link(keys: :unique, name: Registry.ViaTest)
 
     Recorder.with_client Recorder.HTTPoisonProxy do
       Recorder.store_in "fixtures/file.json" do
