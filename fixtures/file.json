@@ -3,12 +3,12 @@
   "interactions": [
     {
       "response": {
+        "url": "https://jsonplaceholder.typicode.com/posts",
         "status_code": 200,
-        "request_url": "https://jsonplaceholder.typicode.com/posts",
         "headers": [
           [
             "Date",
-            "Wed, 29 Aug 2018 20:23:36 GMT"
+            "Thu, 30 Aug 2018 11:34:18 GMT"
           ],
           [
             "Content-Type",
@@ -24,7 +24,7 @@
           ],
           [
             "Set-Cookie",
-            "__cfduid=dac1c681787bdd15fb05679cd34224ec51535574216; expires=Thu, 29-Aug-19 20:23:36 GMT; path=/; domain=.typicode.com; HttpOnly"
+            "__cfduid=d9e6430f1b5439774a50208ac978a88dc1535628858; expires=Fri, 30-Aug-19 11:34:18 GMT; path=/; domain=.typicode.com; HttpOnly"
           ],
           [
             "X-Powered-By",
@@ -48,7 +48,7 @@
           ],
           [
             "Expires",
-            "Thu, 30 Aug 2018 00:23:36 GMT"
+            "Thu, 30 Aug 2018 15:34:18 GMT"
           ],
           [
             "X-Content-Type-Options",
@@ -76,7 +76,7 @@
           ],
           [
             "CF-RAY",
-            "4521bc8739259c05-AMS"
+            "4526f2904be19bff-AMS"
           ]
         ],
         "body": [
@@ -696,12 +696,12 @@
     },
     {
       "response": {
+        "url": "https://jsonplaceholder.typicode.com/comments?postId=1",
         "status_code": 200,
-        "request_url": "https://jsonplaceholder.typicode.com/comments?postId=1",
         "headers": [
           [
             "Date",
-            "Wed, 29 Aug 2018 20:23:36 GMT"
+            "Thu, 30 Aug 2018 11:34:18 GMT"
           ],
           [
             "Content-Type",
@@ -717,7 +717,7 @@
           ],
           [
             "Set-Cookie",
-            "__cfduid=dac1c681787bdd15fb05679cd34224ec51535574216; expires=Thu, 29-Aug-19 20:23:36 GMT; path=/; domain=.typicode.com; HttpOnly"
+            "__cfduid=d9e6430f1b5439774a50208ac978a88dc1535628858; expires=Fri, 30-Aug-19 11:34:18 GMT; path=/; domain=.typicode.com; HttpOnly"
           ],
           [
             "X-Powered-By",
@@ -741,7 +741,7 @@
           ],
           [
             "Expires",
-            "Thu, 30 Aug 2018 00:23:36 GMT"
+            "Thu, 30 Aug 2018 15:34:18 GMT"
           ],
           [
             "X-Content-Type-Options",
@@ -769,7 +769,7 @@
           ],
           [
             "CF-RAY",
-            "4521bc8708ef9c05-AMS"
+            "4526f2901ba89bff-AMS"
           ]
         ],
         "body": [
